@@ -1,4 +1,6 @@
 NAME = pipex
 
-SRC = $Smain.c \
+HEADERS = $Ipipex.h
+
+SRC = $Smain.c
 

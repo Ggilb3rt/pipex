@@ -23,17 +23,17 @@ $O:
 
 $(OBJ): | $O
 
-$O%.o: $S%.c | $O
+$O%.o: $S%.c $(HEADERS) | $O
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	make bonus -C lib/libft/
 	$(CC) $^ -L./lib/libft -lft -o $@
-	./$(NAME) Makefile "ls -l" "grep l" src/main.c
+	./$(NAME) tests/Nina "grep la" "wc -l" tests/out
 
 # CLEANERS
 clean:
-	$(RM) $(O)
+	$(RM) $(OBJ)
 fclean: clean
 	$(RM) $(NAME)
 re: fclean all

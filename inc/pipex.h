@@ -18,4 +18,13 @@
 # include <fcntl.h>
 # include "../lib/libft/libft.h"
 
+# define NB_ARGS 5
+
+typedef struct s_cmds
+{
+	char	**cmd1;
+	char	**cmd2;
+	char	*env_path;
+}				t_cmds;
+
 #endif
