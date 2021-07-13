@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/13 09:21:47 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/13 11:11:56 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ t_bool	get_env_val(char **envp, char *name, t_cmds *cmds)
 void	create_paths(t_cmds *cmds)
 {
 	cmds->paths = ft_split(cmds->env_path, ':');
-	free(cmds->env_path);
-	cmds->env_path = NULL;
 }
 
 void	create_paths_with_cmd(t_cmds *cmds, char *cmdx)
@@ -60,14 +58,15 @@ void	create_paths_with_cmd(t_cmds *cmds, char *cmdx)
 	{
 		tmp = ft_strjoin(cmds->paths[i], "/");
 		free(cmds->paths[i]);
-		cmds->paths[i] = ft_strjoin(tmp, cmdx);
+		if (cmdx != NULL)
+			cmds->paths[i] = ft_strjoin(tmp, cmdx);
 		free(tmp);
 		tmp = NULL;
 		i++;
 	}
 }
 
-void	select_working_path(t_cmds *cmds, char	*cmdx)
+void	select_working_path(t_cmds *cmds, char	**cmdx)
 {
 	int	ret;
 	int	i;
@@ -76,16 +75,16 @@ void	select_working_path(t_cmds *cmds, char	*cmdx)
 	while (cmds->paths[i] != NULL)
 	{
 		ret = access(cmds->paths[i], X_OK);
-		printf("Can I acces %s ? %d\n", cmds->paths[i], ret);
 		if (ret == 0)
 		{
-			free(cmdx);
-			cmdx = ft_strdup(cmds->paths[i]);
+			free(*cmdx);
+			*cmdx = ft_strdup(cmds->paths[i]);
 			ft_split_free((void **)cmds->paths);
 			break ;
 		}
 		i++;
 	}
+	(void)cmdx;
 	// if ret == -1
 	// trouver valeur par default, pour le moment ne rien faire, cf comportement reel
 }
