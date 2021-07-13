@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/13 11:12:14 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/13 14:28:02 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,40 @@ t_bool	files_working(int ac, char **av, int fd_files[2])
 	return (1);
 }
 
+t_bool	send_file_to_cmd(int fd, char **cmd, char **envp)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		execve(cmd[0], cmd, envp);
+		exit(EXIT_SUCCESS);
+	}
+	else if (pid < 0)
+		return (0);
+	else
+	{
+		close(fd);
+		waitpid(pid, NULL, 0);
+	}
+	return (1);
+}
+
+/*t_bool	send_cmdx_to_cmdy(char **cmdx, char **cmdy)
+{
+	int		pipe_fd[2];
+	int		pipe_ret;
+	pid_t	pid1;
+
+	pipe_ret = pipe(pipe_fd);
+	if (pipe_ret == -1)
+		return (0);
+	return (1);
+}*/
+
 int	main(int ac, char **av, char **envp)
 {
 	int		fd_files[2];
@@ -54,13 +88,12 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	if (get_env_val(envp, "PATH=", &cmds) == 0)
 		return (0);
-	create_paths(&cmds);
-	create_paths_with_cmd(&cmds, cmds.cmd1[0]);
-	select_working_path(&cmds, &cmds.cmd1[0]);
-
-	create_paths(&cmds);
-	create_paths_with_cmd(&cmds, cmds.cmd2[0]);
-	select_working_path(&cmds, &cmds.cmd2[0]);
+	init_cmd(&cmds, &cmds.cmd1[0]);
+	init_cmd(&cmds, &cmds.cmd2[0]);
+	send_file_to_cmd(fd_files[0], cmds.cmd1, envp);
+	// put fd[0] in cmd1
+	// put cmd1 in cmd2
+	// put cmd2 in fd[1]
 
 	print_debug(&cmds, fd_files);
 	

@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/13 11:11:56 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/13 13:26:22 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,10 @@ t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
 	// c'est franchement deguelasse, je devrait plutot faire une boucle qui itere
 	// en fonction du nombre d'elements (pas utils pour le projet sauf bonus multi pipe)
 	//if (av[2] == NULL || av[3] == NULL)
-	//	return(0);
+	if ((av[2] && !av[2][0])|| (av[3] && !av[3][0]))
+		return (0);
 	cmds->cmd1 = ft_split(av[2], separator);
-	if (cmds->cmd1 == NULL)
-		return (0);
 	cmds->cmd2 = ft_split(av[3], separator);
-	if (cmds->cmd2 == NULL)
-		return (0);
-		// cf free
 	return (1);
 }
 
@@ -84,6 +80,8 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 		}
 		i++;
 	}
+	if (ret == -1)
+		ft_split_free((void **)cmds->paths);
 	(void)cmdx;
 	// if ret == -1
 	// trouver valeur par default, pour le moment ne rien faire, cf comportement reel
