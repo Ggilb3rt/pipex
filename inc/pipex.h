@@ -25,6 +25,9 @@ typedef struct s_cmds
 	char	**cmd1;
 	char	**cmd2;
 	char	*env_path;
+	char	**paths;
+	char	*selected_path1;
+	char	*selected_path2;
 }				t_cmds;
 
 #endif

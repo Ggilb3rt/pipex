@@ -17,7 +17,10 @@ Examples
 - check if files can be opened (create output if doesn't exist) av[1] and av[ac - 1]
 - split CMDs (from av[2] to av[ac - 2])
 	- NOPE SPLIT DO IT [add NULL in the end of CMDs ==> {"cmd", "opt1", "opt2", NULL} (needed in execve())]
-- add PATH to splited[0]
+- split PATH
+	- add cmdX to each PATH
+	- check if one can access to the file
+	- select the one
 
 ### THEN
 - 'send' file1 content to cmd1 (cf 42/test/pipex/divide/file_to_cmd.c doesn't works)

@@ -12,6 +12,19 @@
 
 #include "pipex.h"
 
+void	print_debug(t_cmds *cmds, int fd_files[2])
+{
+	printf("ENV_PATH\n%s\n", cmds->env_path);	// being free in create_paths
+
+	printf("\nCMDS.PATH\n");
+	int i = 0;
+	while (cmds->paths[i] != NULL)
+	{
+		printf("\t%s\n", cmds->paths[i++]);
+	}
+	printf("FDs : %d\t%d\n", fd_files[0], fd_files[1]);
+}
+
 t_bool	files_working(int ac, char **av, int fd_files[2])
 {
 	fd_files[0] = open(av[1], O_RDONLY);
@@ -48,9 +61,52 @@ t_bool	get_env_val(char **envp, char *name, t_cmds *cmds)
 		i++;
 	if (envp[i] == NULL)
 		return (0);
-	cmds->env_path = ft_strdup(envp[i]);
-	printf("%s\n", cmds->env_path);
+	cmds->env_path = ft_strdup(envp[i] + l_name);
 	return (1);
+}
+
+void	create_paths(t_cmds *cmds)
+{
+	cmds->paths = ft_split(cmds->env_path, ':');
+	free(cmds->env_path);
+	cmds->env_path = NULL;
+}
+
+void	create_paths_with_cmd(t_cmds	*cmds, char	*cmdx)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (cmds->paths[i] != NULL)
+	{
+		tmp = ft_strjoin(cmds->paths[i], "/");
+		free(cmds->paths[i]);
+		cmds->paths[i] = ft_strjoin(tmp, cmdx);
+		free(tmp);
+		i++;
+	}
+}
+
+void	select_working_path(t_cmds *cmds)
+{
+	int	ret;
+	int	i;
+
+	i = 0;
+	while (cmds->paths[i] != NULL)
+	{
+		ret = access(cmds->paths[i], X_OK);
+		// if ret == 0
+		//		free(cmdx[0])
+		//		put paths[i] in cmdX[0]
+		//		free cmds->path
+		//		break;
+		printf("Can I acces %s ? %d\n", cmds->paths[i], ret);
+		i++;
+	}
+	// if ret == -1
+	// trouver valeur par default
 }
 
 int	main(int ac, char **av, char **envp)
@@ -58,7 +114,6 @@ int	main(int ac, char **av, char **envp)
 	int		fd_files[2];
 	t_cmds	cmds;
 
-	(void)envp;
 	if (ac != NB_ARGS)
 		return (0);
 	if (files_working(ac, av, fd_files) == 0)
@@ -67,6 +122,13 @@ int	main(int ac, char **av, char **envp)
 		return (0);
 	if(get_env_val(envp, "PATH=", &cmds) == 0)
 		return (0);
-	printf("%d\t%d\n", fd_files[0], fd_files[1]);
+	create_paths(&cmds);
+	create_paths_with_cmd(&cmds, cmds.cmd2[0]);
+	select_working_path(&cmds);
+
+	// check if access work with path, put it in cmdX free paths
+	// need to do that for each cmd
+
+	print_debug(&cmds, fd_files);
 	return (0);
 }
