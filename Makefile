@@ -29,7 +29,7 @@ $O%.o: $S%.c $(HEADERS) | $O
 $(NAME): $(OBJ)
 	make bonus -C lib/libft/
 	$(CC) $^ -L./lib/libft -lft -o $@
-	./$(NAME) tests/Nina "grep la" "wc -l" tests/out
+	./$(NAME) ./tests/Nina "grep la" "grep ," ./tests/out
 
 # CLEANERS
 clean:
