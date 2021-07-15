@@ -1,0 +1,7 @@
+[
+	{
+		"description" : "\n${ORANGE}0 commandes${NC}\n",
+		"pipex" : "../pipex ./in \"\" \"\" ./out",
+		"bash" : "< ./in \"\" | \"\" > ./outR"
+	}
+]

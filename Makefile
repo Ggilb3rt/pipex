@@ -30,6 +30,9 @@ $(NAME): $(OBJ)
 	make bonus -C lib/libft/
 	$(CC) $^ -L./lib/libft -lft -o $@
 	./$(NAME) ./tests/Nina "grep la" "grep ," ./tests/out
+	cat ./tests/out
+	rm ./tests/out
+	./$(NAME) ./tests/Nina "" "" ./tests/out
 
 # CLEANERS
 clean:

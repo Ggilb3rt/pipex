@@ -2,4 +2,4 @@ NAME = pipex
 
 HEADERS = $Ipipex.h
 
-SRC = $Smain.c $Spath_parser.c $Sinit_cmd.c
+SRC = $Smain.c $Spath_parser.c $Sinit_cmd.c $Squit.c $Sexecute.c

@@ -6,19 +6,30 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/13 13:26:22 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 12:54:27 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	put_empty_cmd(char **cmd)
+{
+	cmd = malloc(sizeof(char *) * 1);
+	cmd[0] = malloc(sizeof(char) * 1);
+	cmd[0][0] = ' ';
+}
+
 t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
 {
-	// c'est franchement deguelasse, je devrait plutot faire une boucle qui itere
-	// en fonction du nombre d'elements (pas utils pour le projet sauf bonus multi pipe)
-	//if (av[2] == NULL || av[3] == NULL)
-	if ((av[2] && !av[2][0])|| (av[3] && !av[3][0]))
-		return (0);
+	if ((av[2] && !av[2][0]) || (av[3] && !av[3][0]))
+	{
+		//return (0);
+		if (av[2] && !av[2][0])
+			cmds->cmd1[0] = "";
+		if (av[3] && !av[3][0])
+			cmds->cmd2[0] = "";
+		return (1);
+	}
 	cmds->cmd1 = ft_split(av[2], separator);
 	cmds->cmd2 = ft_split(av[3], separator);
 	return (1);
@@ -83,6 +94,5 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 	if (ret == -1)
 		ft_split_free((void **)cmds->paths);
 	(void)cmdx;
-	// if ret == -1
 	// trouver valeur par default, pour le moment ne rien faire, cf comportement reel
 }
