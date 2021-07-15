@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 10:55:43 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 10:56:36 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 16:45:52 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ pid_t	exec_from_to(int from[2], int to[2], char **cmd, char **envp)
 		close_unneeded(count, from, to);
 		count++;
 		execve(cmd[0], cmd, envp);
+		//perror("Fork");
+		//printf("%s", strerror(errno));
 	}
 	return (pid);
 }

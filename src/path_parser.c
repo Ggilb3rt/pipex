@@ -6,19 +6,11 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 15:38:39 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 16:03:21 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	put_empty_cmd(char **cmd)
-{
-	printf("ici");
-	cmd = (char **)malloc(sizeof(char *) * 1);
-	cmd[0] = (char *)malloc(sizeof(char) * 1);
-	cmd[0][0] = '\0';
-}
 
 t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
 {
@@ -88,8 +80,10 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 		if (ret == 0)
 		{
 			if (cmdx != NULL)
+			{
 				free(*cmdx);
-			*cmdx = ft_strdup(cmds->paths[i]);
+				*cmdx = ft_strdup(cmds->paths[i]);
+			}
 			ft_split_free((void **)cmds->paths);
 			break ;
 		}
@@ -97,6 +91,5 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 	}
 	if (ret == -1)
 		ft_split_free((void **)cmds->paths);
-	(void)cmdx;
 	// trouver valeur par default, pour le moment ne rien faire, cf comportement reel
 }

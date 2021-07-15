@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 15:27:48 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 16:58:20 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,13 @@ t_bool	files_working(int ac, char **av, int fd_files[2])
 	fd_files[0] = open(av[1], O_RDONLY);
 	fd_files[1] = open(av[ac - 1], O_WRONLY | O_CREAT, 0666);
 	if (fd_files[0] == -1 || fd_files[1] == -1)
+	{
+		if (fd_files[0] == -1)
+			perror(av[1]);
+		if (fd_files[1] == -1)
+			perror(av[ac - 1]);
 		return (0);
+	}
 	return (1);
 }
 
@@ -74,9 +80,6 @@ int	main(int ac, char **av, char **envp)
 	int		fd_pipe[2];
 	pid_t	pid[2];
 	t_cmds	cmds;
-
-	char **lol;
-	lol = ft_split("", ' ');
 
 	if (ac != NB_ARGS)
 		return (1);
