@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 12:54:27 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:38:39 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	put_empty_cmd(char **cmd)
 {
-	cmd = malloc(sizeof(char *) * 1);
-	cmd[0] = malloc(sizeof(char) * 1);
-	cmd[0][0] = ' ';
+	printf("ici");
+	cmd = (char **)malloc(sizeof(char *) * 1);
+	cmd[0] = (char *)malloc(sizeof(char) * 1);
+	cmd[0][0] = '\0';
 }
 
 t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
@@ -25,9 +26,11 @@ t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
 	{
 		//return (0);
 		if (av[2] && !av[2][0])
-			cmds->cmd1[0] = "";
+			//put_empty_cmd(cmds->cmd1);
+			cmds->cmd1 = NULL;
 		if (av[3] && !av[3][0])
-			cmds->cmd2[0] = "";
+			//put_empty_cmd(cmds->cmd1);
+			cmds->cmd2[0] = NULL;
 		return (1);
 	}
 	cmds->cmd1 = ft_split(av[2], separator);
@@ -84,7 +87,8 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 		ret = access(cmds->paths[i], X_OK);
 		if (ret == 0)
 		{
-			free(*cmdx);
+			if (cmdx != NULL)
+				free(*cmdx);
 			*cmdx = ft_strdup(cmds->paths[i]);
 			ft_split_free((void **)cmds->paths);
 			break ;

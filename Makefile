@@ -32,7 +32,7 @@ $(NAME): $(OBJ)
 	./$(NAME) ./tests/Nina "grep la" "grep ," ./tests/out
 	cat ./tests/out
 	rm ./tests/out
-	./$(NAME) ./tests/Nina "" "" ./tests/out
+	#./$(NAME) ./tests/Nina "" "" ./tests/out
 
 # CLEANERS
 clean:

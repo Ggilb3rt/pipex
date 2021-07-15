@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 12:11:04 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/15 15:27:48 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ int	main(int ac, char **av, char **envp)
 	int		fd_pipe[2];
 	pid_t	pid[2];
 	t_cmds	cmds;
+
+	char **lol;
+	lol = ft_split("", ' ');
 
 	if (ac != NB_ARGS)
 		return (1);
