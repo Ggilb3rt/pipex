@@ -6,45 +6,11 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/16 11:17:14 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/16 13:27:15 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	**put_empty(void)
-{
-	char	**ret;
-
-	ret = malloc(sizeof(char *) * 2);
-	ret[0] = ft_strdup("");
-	ret[1] = NULL;
-	return (ret);
-}
-
-t_bool	split_cmds(char **av, char separator, t_cmds *cmds)
-{
-	if ((av[2] && !av[2][0]) && (av[3] && !av[3][0]))
-		return (0);
-	if (av[2] && !av[2][0])
-	{	
-		cmds->cmd1 = put_empty();
-		cmds->cmd2 = ft_split(av[3], separator);
-		printf("empty spaces 1 : |%s|\n", cmds->cmd1[0]);
-	}
-	else if (av[3] && !av[3][0])
-	{
-		cmds->cmd2 = put_empty();
-		cmds->cmd1 = ft_split(av[2], separator);
-		printf("empty spaces 2 : |%s|\n", cmds->cmd2[0]);
-	}
-	else
-	{
-		cmds->cmd1 = ft_split(av[2], separator);
-		cmds->cmd2 = ft_split(av[3], separator);
-	}
-	return (1);
-}
 
 t_bool	get_env_val(char **envp, char *name, t_cmds *cmds)
 {
@@ -94,6 +60,8 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 
 	i = 0;
 	// ! mettre path == "" si cmdx == ""
+	if (ft_strlen(cmdx[0]) == 0)
+		return ;
 	while (cmds->paths[i] != NULL)
 	{
 		ret = access(cmds->paths[i], X_OK);
