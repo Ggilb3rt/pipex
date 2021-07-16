@@ -13,7 +13,7 @@ printf "$des"
 
 printf "\n${ORANGE}0 commandes${NC}\n"
 ../pipex ./in "" "" ./out
-< ./in "" | "" > ./outR
+< ./in | > ./outR
 cat -e ./out
 cat -e ./outR
 diff ./out ./outR

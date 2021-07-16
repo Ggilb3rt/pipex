@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/15 16:58:20 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/16 11:19:28 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	main(int ac, char **av, char **envp)
 	pid_t	pid[2];
 	t_cmds	cmds;
 
+//init_cmds(&cmds);
 	if (ac != NB_ARGS)
 		return (1);
 	if (files_working(ac, av, fd_files) == 0)
@@ -88,11 +89,11 @@ int	main(int ac, char **av, char **envp)
 	if (pipe(fd_pipe) == -1)
 		return (EXIT_FAILURE);
 	if (split_cmds(av, ' ', &cmds) == 0)
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	if (get_env_val(envp, "PATH=", &cmds) == 0)
-		return (1);
-	init_cmd(&cmds, &cmds.cmd1[0]);
-	init_cmd(&cmds, &cmds.cmd2[0]);
+		return (EXIT_FAILURE);
+	init_cmd(&cmds, cmds.cmd1, 1);
+	init_cmd(&cmds, cmds.cmd2, 2);
 	pid[0] = exec_from_to(fd_files, fd_pipe, cmds.cmd1, envp);
 	pid[1] = exec_from_to(fd_pipe, fd_files, cmds.cmd2, envp);
 	close_files_pipe(fd_files, fd_pipe);
@@ -101,5 +102,4 @@ int	main(int ac, char **av, char **envp)
 	free_cmds(&cmds);
 	return (0);
 }
-
 //! If commande 1 not found do cmd 2
