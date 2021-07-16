@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/16 13:52:39 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/16 15:57:26 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_debug(t_cmds *cmds, int fd_files[2])
 t_bool	files_working(int ac, char **av, int fd_files[2], t_bool *in_readable)
 {
 	fd_files[0] = open(av[1], O_RDONLY);
-	fd_files[1] = open(av[ac - 1], O_WRONLY | O_CREAT, 0666);
+	fd_files[1] = open(av[ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (fd_files[0] == -1 || fd_files[1] == -1)
 	{
 		if (fd_files[0] == -1)
@@ -70,6 +70,7 @@ int	main(int ac, char **av, char **envp)
 		return (EXIT_FAILURE);
 	init_cmd(&cmds, cmds.cmd1, 1);
 	init_cmd(&cmds, cmds.cmd2, 2);
+	//print_debug(&cmds, fd_files);
 	if (in_readable)
 		pid[0] = exec_from_to(fd_files, fd_pipe, cmds.cmd1, envp);
 	pid[1] = exec_from_to(fd_pipe, fd_files, cmds.cmd2, envp);

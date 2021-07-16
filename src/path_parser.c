@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/16 13:27:15 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/16 15:38:00 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	select_working_path(t_cmds *cmds, char	**cmdx)
 	int	i;
 
 	i = 0;
-	// ! mettre path == "" si cmdx == ""
 	if (ft_strlen(cmdx[0]) == 0)
 		return ;
 	while (cmds->paths[i] != NULL)
