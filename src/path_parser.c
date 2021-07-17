@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 15:05:12 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/17 18:18:00 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,23 @@ void	create_paths_with_cmd(t_cmds *cmds, char *cmdx, int n)
 	}
 }
 
+t_bool	check_empty(t_cmds *cmds, char	**cmdx)
+{
+	if (ft_strlen(cmdx[0]) == 0)
+	{
+		ft_split_free((void **)cmds->paths);
+		return (1);
+	}
+	return (0);
+}
+
 void	select_working_path(t_cmds *cmds, char	**cmdx)
 {
 	int	ret;
 	int	i;
 
 	i = 0;
-	if (ft_strlen(cmdx[0]) == 0)
+	if (check_empty(cmds, cmdx))
 		return ;
 	while (cmds->paths[i] != NULL)
 	{
