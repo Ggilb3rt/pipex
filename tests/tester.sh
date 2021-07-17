@@ -102,9 +102,10 @@ rm ./out
 rm ./outR
 
 printf "\n${ORANGE} '' in options ${NC}\n"
-../pipex ./Nina "grep la" "awk '{print}'" ./out
+../pipex ./Nina "grep la" "awk {print}" ./out
 < ./Nina grep la | awk '{print}' > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out

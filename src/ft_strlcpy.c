@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/15 10:36:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 15:09:07 by ggilbert         ###   ########.fr       */
+/*   Created: 2019/10/08 17:37:17 by ggilbert          #+#    #+#             */
+/*   Updated: 2021/07/17 16:32:22 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_files_pipe(int files[2], int pipe[2])
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	close(files[0]);
-	close(files[1]);
-	close(pipe[0]);
-	close(pipe[1]);
-}
+	size_t	srcl;
 
-void	free_cmds(t_cmds *cmds)
-{
-	if (cmds->env_path != NULL)
+	if (!src || !dst)
+		return (0);
+	srcl = ft_strlen(src);
+	while (*src && dstsize > 1)
 	{
-		free(cmds->env_path);
-		cmds->env_path = NULL;
+		*dst++ = *src++;
+		dstsize--;
 	}
-	if (cmds->cmd1 != NULL)
-		ft_split_free((void **)cmds->cmd1);
-	if (cmds->cmd2 != NULL)
-		ft_split_free((void **)cmds->cmd2);
-	exit(EXIT_SUCCESS);
+	if (dstsize > 0)
+		*dst = '\0';
+	return (srcl);
 }

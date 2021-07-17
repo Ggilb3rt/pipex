@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/15 10:36:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 15:09:07 by ggilbert         ###   ########.fr       */
+/*   Created: 2021/02/22 19:57:37 by ggilbert          #+#    #+#             */
+/*   Updated: 2021/07/17 16:31:04 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_files_pipe(int files[2], int pipe[2])
-{
-	close(files[0]);
-	close(files[1]);
-	close(pipe[0]);
-	close(pipe[1]);
-}
+/*
+**	To use after ft_split
+**	this function free each item of a **
+*/
 
-void	free_cmds(t_cmds *cmds)
+void	ft_split_free(void **splited)
 {
-	if (cmds->env_path != NULL)
+	int	i;
+
+	i = 0;
+	while (splited[i] != NULL)
 	{
-		free(cmds->env_path);
-		cmds->env_path = NULL;
+		free(splited[i]);
+		splited[i] = NULL;
+		i++;
 	}
-	if (cmds->cmd1 != NULL)
-		ft_split_free((void **)cmds->cmd1);
-	if (cmds->cmd2 != NULL)
-		ft_split_free((void **)cmds->cmd2);
-	exit(EXIT_SUCCESS);
+	free(splited);
 }

@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   print_err.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/15 10:36:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 15:09:07 by ggilbert         ###   ########.fr       */
+/*   Created: 2021/07/17 17:04:52 by ggilbert          #+#    #+#             */
+/*   Updated: 2021/07/17 17:08:40 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	close_files_pipe(int files[2], int pipe[2])
+void	put_err(char *str)
 {
-	close(files[0]);
-	close(files[1]);
-	close(pipe[0]);
-	close(pipe[1]);
+	write(STDERR_FILENO, str, ft_strlen(str));
 }
 
-void	free_cmds(t_cmds *cmds)
+void	put_std(char *str)
 {
-	if (cmds->env_path != NULL)
-	{
-		free(cmds->env_path);
-		cmds->env_path = NULL;
-	}
-	if (cmds->cmd1 != NULL)
-		ft_split_free((void **)cmds->cmd1);
-	if (cmds->cmd2 != NULL)
-		ft_split_free((void **)cmds->cmd2);
-	exit(EXIT_SUCCESS);
+	write(STDOUT_FILENO, str, ft_strlen(str));
 }

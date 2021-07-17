@@ -1,7 +1,6 @@
 O = obj/
 I = inc/
 S = src/
-L = lib/
 
 include sources.mk
 OBJ = $(SRC:$S%.c=$O%.o)
@@ -27,12 +26,12 @@ $O%.o: $S%.c $(HEADERS) | $O
 	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	make bonus -C lib/libft/
-	$(CC) $^ -L./lib/libft -lft -o $@
+	#make bonus -C lib/libft/
+	$(CC) $^ -o $@
 	./$(NAME) ./tests/Nina "grep la" "grep ," ./tests/out
-	#cat ./tests/out
-	#rm ./tests/out
-	#./$(NAME) ./tests/Nina "" "" ./tests/out
+	cat ./tests/out
+	rm ./tests/out
+	./$(NAME) ./tests/Nina "" "" ./tests/out
 
 # CLEANERS
 clean:
@@ -40,10 +39,3 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 re: fclean all
-
-fcleanlibft:
-	make fclean -C lib/libft/
-fcleanall: fclean fcleanlibft
-reall: fcleanall all
-
-

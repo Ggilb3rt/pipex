@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 10:55:43 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/16 13:05:09 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/17 17:21:38 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ pid_t	exec_from_to(int from[2], int to[2], char **cmd, char **envp)
 	pid_t				pid;
 	static unsigned int	count = 1;
 
+	printf("BONJOUR CMD %s\n", cmd[0]);
 	if (count == UINT_MAX)
 		count = 1;
 	pid = fork();
@@ -44,8 +45,15 @@ pid_t	exec_from_to(int from[2], int to[2], char **cmd, char **envp)
 		dup2(to[1], STDOUT_FILENO);
 		close_unneeded(count, from, to);
 		count++;
+		fprintf(stderr, "BONJOUR exec %s\n", cmd[0]);
 		execve(cmd[0], cmd, envp);
-		perror("Fork");
+		if (errno == 2)
+		{
+			put_err(cmd[0]);
+			put_err(": command not found\n");
+		}
+		else
+			perror(cmd[0]);
 	}
 	return (pid);
 }
