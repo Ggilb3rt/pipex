@@ -6,28 +6,11 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 18:12:51 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/19 11:32:45 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	print_debug(t_cmds *cmds, t_fds fd)
-{
-	int	i;
-
-	printf("FD files :%d %d | %d\n", fd.files[0], fd.files[1], fd.in_readable);
-	printf("FD pipe :%d %d\n", fd.pipe[0], fd.pipe[1]);
-	printf("ENV_PATH\n%s\n", cmds->env_path);
-	i = 0;
-	printf("\nCMD1 final\n");
-	while (cmds->cmd1[i] != NULL)
-		printf("\t%s\n", cmds->cmd1[i++]);
-	i = 0;
-	printf("\nCMD2 final\n");
-	while (cmds->cmd2[i] != NULL)
-		printf("\t%s\n", cmds->cmd2[i++]);
-}
 
 void	files_working(int ac, char **av, int fd_files[2], t_bool *in_readable)
 {

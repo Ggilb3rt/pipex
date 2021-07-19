@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/11 18:00:13 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 17:09:01 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/19 11:35:30 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	create_paths_with_cmd(t_cmds *cmds, char *cmdx, int n);
 void	select_working_path(t_cmds *cmds, char	**cmdx);
 void	init_cmd(t_cmds *cmds, char **cmdx, int n);
 
-void	close_unneeded(unsigned int c, int *from, int *to);
 pid_t	exec_from_to(int from[2], int to[2], char **cmd, char **envp);
 
 void	close_files_pipe(int files[2], int pipe[2]);

@@ -6,7 +6,7 @@
 /*   By: ggilbert <ggilbert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 09:20:01 by ggilbert          #+#    #+#             */
-/*   Updated: 2021/07/17 18:18:00 by ggilbert         ###   ########.fr       */
+/*   Updated: 2021/07/19 11:33:58 by ggilbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ void	create_paths_with_cmd(t_cmds *cmds, char *cmdx, int n)
 			cmds->paths[i] = ft_strjoin(tmp, cmdx);
 		else if (n == 2)
 			cmds->paths[i] = ft_strjoin(tmp, cmdx);
-		free(tmp);
-		tmp = NULL;
+		if (tmp)
+		{
+			free(tmp);
+			tmp = NULL;
+		}
 		i++;
 	}
 }
