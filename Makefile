@@ -23,15 +23,13 @@ $O:
 $(OBJ): | $O
 
 $O%.o: $S%.c $(HEADERS) | $O
-	$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
+	@printf "Création des objets en cours : $@ ...\n"
+	@$(CC) $(CFLAGS) $(INCFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	#make bonus -C lib/libft/
-	$(CC) $^ -o $@
-	./$(NAME) ./tests/Nina "grep la" "grep ," ./tests/out
-	cat ./tests/out
-	rm ./tests/out
-	./$(NAME) ./tests/Nina "" "" ./tests/out
+	@printf "Compilation ...\n"
+	@$(CC) $^ -o $@
+	@printf "Have fun :-)\n"
 
 # CLEANERS
 clean:
