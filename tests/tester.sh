@@ -8,13 +8,14 @@ PURP='\033[0;35m'
 NC='\033[0m'
 
 #des=`jq '.[0].description' list.json` | `awk '{print substr($0, 2, length($0) - 2)}'`
-des=`jq '.[0].description' list.json | awk '{print substr($0, 2, length($0) - 2)}'`
-printf "$des"
+#des=`jq '.[0].description' list.json | awk '{print substr($0, 2, length($0) - 2)}'`
+#printf "$des"
 
 printf "\n${ORANGE}0 commandes${NC}\n"
 ../pipex ./in "" "" ./out
 < ./in | > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -24,6 +25,7 @@ printf "\n${ORANGE}cmd1 vide${NC}\n"
 ../pipex ./in "" "ls" ./out
 < ./in "" | ls > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -33,6 +35,7 @@ printf "\n${ORANGE}cmd2 vide${NC}\n"
 ../pipex ./in "cat" "" ./out
 < ./in cat | "" > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -42,6 +45,7 @@ printf "${ORANGE}Cherche 'la' dans tests/Nina et affiche le nombe de lignes${NC}
 ../pipex ./Nina "grep la" "wc -l" ./out
 < ./Nina grep la | wc -l > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -51,6 +55,7 @@ printf "\n${ORANGE}Cherche '!' dans tests/in${NC}\n"
 ../pipex ./in "grep !" "wc -l" ./out
 < ./in grep ! | wc -l > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -60,6 +65,7 @@ printf "\n${ORANGE}Une part de clafouti !${NC}\n"
 ../pipex ./in "une part" "de clafouti" ./out
 < ./in une part | de clafouti > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -69,6 +75,7 @@ printf "\n${ORANGE}Vrai commande faux arguments${NC}\n"
 ../pipex ./in "cat -mi-ours mi-scorpion" "wc mi-ours" ./out
 < ./in cat mi-ours mi-scorpion | wc mi-ours > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -78,6 +85,7 @@ printf "\n${ORANGE}path in cmd (first cmd empty)${NC}\n"
 ../pipex ./in "" "/bin/ls" ./out
 < ./in "" | /bin/ls > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -87,6 +95,7 @@ printf "\n${ORANGE}paths in cmd${NC}\n"
 ../pipex ./in "/usr/bin/grep w" "cat -e" ./out
 < ./in /usr/bin/grep w | cat -e > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
@@ -96,14 +105,27 @@ printf "\n${ORANGE}Wrong path to in file${NC}\n"
 ../pipex ./pouet "/usr/bin/grep w" "cat -e" ./out
 < ./pouet /usr/bin/grep w | cat -e > ./outR
 cat -e ./out
+echo ""
 cat -e ./outR
 diff ./out ./outR
 rm ./out
 rm ./outR
 
-printf "\n${ORANGE} '' in options ${NC}\n"
+printf "\n${ORANGE} Test X ${NC}\n"
 ../pipex ./Nina "grep la" "awk {print}" ./out
 < ./Nina grep la | awk '{print}' > ./outR
+cat -e ./out
+echo ""
+cat -e ./outR
+diff ./out ./outR
+rm ./out
+rm ./outR
+
+printf "\n${ORANGE} Use Test X then call again with other params ${NC}\n"
+../pipex ./Nina "grep la" "awk {print}" ./out
+../pipex ./Nina "grep ," "awk {print}" ./out
+< ./Nina grep la | awk '{print}' > ./outR
+< ./Nina grep , | awk '{print}' > ./outR
 cat -e ./out
 echo ""
 cat -e ./outR
