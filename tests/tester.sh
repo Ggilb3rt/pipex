@@ -132,3 +132,13 @@ cat -e ./outR
 diff ./out ./outR
 rm ./out
 rm ./outR
+
+printf "\n${ORANGE} Use only space ${NC}\n"
+../pipex ./Nina " " " " ./out
+< ./Nina " " | " " > ./outR
+cat -e ./out
+echo ""
+cat -e ./outR
+diff ./out ./outR
+rm ./out
+rm ./outR
